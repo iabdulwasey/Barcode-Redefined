@@ -1,0 +1,26 @@
+{
+  "projectName": "SCANVAS",
+  "description": "AI-powered creative barcode & QR code studio",
+  "primaryBranch": "claude/barkod-studio-platform-2REki",
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(git:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)"
+    ]
+  },
+  "agents": {
+    "barcode-engine": ".claude/agents/barcode-engine.md",
+    "ui-designer": ".claude/agents/ui-designer.md",
+    "ai-integration": ".claude/agents/ai-integration.md",
+    "api-builder": ".claude/agents/api-builder.md",
+    "qa-validator": ".claude/agents/qa-validator.md"
+  },
+  "context": {
+    "always_read": ["CLAUDE.md", "PLAN.md"]
+  }
+}

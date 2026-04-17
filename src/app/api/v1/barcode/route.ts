@@ -51,7 +51,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       {
         error: "Validation failed",
         code: "VALIDATION_ERROR",
-        details: parsed.error.flatten(),
       } satisfies APIResponse<never>,
       { status: 400 }
     );

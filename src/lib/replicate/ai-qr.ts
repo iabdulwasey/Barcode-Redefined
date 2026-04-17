@@ -48,9 +48,8 @@ let replicateClient: Replicate | null = null;
 
 function getClient(): Replicate {
   if (!replicateClient) {
-    replicateClient = new Replicate({
-      auth: process.env.REPLICATE_API_TOKEN,
-    });
+    const auth = process.env.REPLICATE_API_TOKEN;
+    replicateClient = new Replicate(auth ? { auth } : {});
   }
   return replicateClient;
 }

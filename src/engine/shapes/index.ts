@@ -498,6 +498,360 @@ export const SHAPES: Shape[] = [
     isCustom: false,
     isPremium: false,
   },
+
+  // ─── Nature (Extended) ────────────────────────────────────────────────────
+  {
+    id: "sun",
+    name: "Sun",
+    category: "nature",
+    tags: ["sun", "bright", "summer", "energy"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.85,
+    svgPath:
+      "M100,75 m-30,0 a30,30 0 1,0 60,0 a30,30 0 1,0 -60,0 Z M95,10 L105,10 L105,30 L95,30 Z M95,120 L105,120 L105,140 L95,140 Z M25,70 L45,70 L45,80 L25,80 Z M155,70 L175,70 L175,80 L155,80 Z M40,30 L50,20 L65,35 L55,45 Z M135,115 L145,105 L160,120 L150,130 Z M40,120 L55,105 L65,115 L50,130 Z M135,35 L150,20 L160,30 L145,45 Z",
+    recommendedTypes: ["EAN-8", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "moon",
+    name: "Crescent Moon",
+    category: "nature",
+    tags: ["moon", "night", "lunar", "crescent"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.9,
+    svgPath:
+      "M70,10 C40,20 20,50 20,85 C20,125 55,145 95,145 C130,145 160,125 175,95 C150,115 115,115 90,95 C60,70 55,35 70,10 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "flower",
+    name: "Flower",
+    category: "nature",
+    tags: ["flower", "bloom", "petals", "spring"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.85,
+    svgPath:
+      "M100,75 m-15,0 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z M100,10 C85,25 85,50 100,60 C115,50 115,25 100,10 Z M100,140 C85,125 85,100 100,90 C115,100 115,125 100,140 Z M35,75 C50,60 75,60 85,75 C75,90 50,90 35,75 Z M165,75 C150,60 125,60 115,75 C125,90 150,90 165,75 Z M50,25 C70,30 85,50 85,65 C70,60 55,45 50,25 Z M150,25 C130,30 115,50 115,65 C130,60 145,45 150,25 Z M50,125 C70,120 85,100 85,85 C70,90 55,105 50,125 Z M150,125 C130,120 115,100 115,85 C130,90 145,105 150,125 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "leaf",
+    name: "Leaf",
+    category: "nature",
+    tags: ["leaf", "plant", "nature", "eco"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.9,
+    svgPath:
+      "M100,10 C60,30 30,70 40,110 C50,140 90,145 100,140 C110,145 150,140 160,110 C170,70 140,30 100,10 Z M100,30 L100,140 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+
+  // ─── Animals (Extended) ───────────────────────────────────────────────────
+  {
+    id: "dog",
+    name: "Dog",
+    category: "animals",
+    tags: ["dog", "puppy", "pet", "animal"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.85,
+    svgPath:
+      "M30,80 L30,140 L50,140 L50,100 L80,100 L80,140 L120,140 L120,100 L150,100 L150,140 L170,140 L170,80 C170,60 155,45 135,45 L130,35 L115,15 L100,35 L85,15 L70,35 L65,45 C45,45 30,60 30,80 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "horse",
+    name: "Horse",
+    category: "animals",
+    tags: ["horse", "equestrian", "pony", "animal"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.88,
+    svgPath:
+      "M25,145 L25,90 C25,75 35,65 50,65 L60,65 L55,45 L65,25 L75,20 L80,30 L100,25 L115,30 L135,25 L140,35 L150,50 L150,75 L165,80 L175,100 L170,145 L155,145 L150,115 L115,115 L115,145 L100,145 L100,120 L70,120 L70,145 L55,145 L55,115 L40,115 L40,145 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "fish",
+    name: "Fish",
+    category: "animals",
+    tags: ["fish", "sea", "ocean", "aquatic"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.8,
+    svgPath:
+      "M20,75 L50,40 L55,60 C75,45 105,45 135,55 C160,65 180,75 195,60 L180,100 C195,85 175,85 150,95 C120,105 85,105 65,90 L50,110 Z M140,70 C142,68 146,68 148,70 C146,72 142,72 140,70 Z",
+    recommendedTypes: ["EAN-8", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "penguin",
+    name: "Penguin",
+    category: "animals",
+    tags: ["penguin", "bird", "antarctic", "cute"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.92,
+    svgPath:
+      "M100,5 C80,5 65,20 65,40 L65,55 C50,60 40,80 40,105 L40,145 L70,145 L75,125 L85,145 L115,145 L125,145 L130,125 L135,145 L160,145 L160,105 C160,80 150,60 135,55 L135,40 C135,20 120,5 100,5 Z M85,28 C85,30 87,32 89,32 C91,32 93,30 93,28 Z M107,28 C107,30 109,32 111,32 C113,32 115,30 115,28 Z M93,42 L107,42 L100,52 Z",
+    recommendedTypes: ["CODE-128", "EAN-8"],
+    isCustom: false,
+    isPremium: false,
+  },
+
+  // ─── Food & Drink (Extended) ──────────────────────────────────────────────
+  {
+    id: "banana",
+    name: "Banana",
+    category: "food-drink",
+    tags: ["banana", "fruit", "yellow", "tropical"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.88,
+    svgPath:
+      "M40,20 C30,15 22,25 25,40 C30,75 55,115 95,135 C135,150 170,135 175,120 C165,128 140,125 115,110 C85,92 60,65 50,40 C48,32 48,25 55,22 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "avocado",
+    name: "Avocado",
+    category: "food-drink",
+    tags: ["avocado", "fruit", "green", "healthy"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.9,
+    svgPath:
+      "M100,5 C80,5 65,15 60,35 C45,55 40,85 45,105 C50,130 75,145 100,145 C125,145 150,130 155,105 C160,85 155,55 140,35 C135,15 120,5 100,5 Z M100,70 m-12,0 a12,12 0 1,0 24,0 a12,12 0 1,0 -24,0 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "beer-mug",
+    name: "Beer Mug",
+    category: "food-drink",
+    tags: ["beer", "mug", "drink", "bar"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.88,
+    svgPath:
+      "M50,15 C70,5 100,5 120,10 C140,15 145,25 145,30 L160,30 C170,30 175,40 175,50 C175,70 170,80 160,80 L145,80 L145,130 C145,138 140,145 130,145 L65,145 C55,145 50,138 50,130 Z M155,40 L155,70 L162,70 C165,70 168,65 168,55 C168,45 165,40 162,40 Z M70,30 C75,25 95,25 115,28 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "burger",
+    name: "Burger",
+    category: "food-drink",
+    tags: ["burger", "food", "fast food", "lunch"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.85,
+    svgPath:
+      "M30,25 C30,15 55,5 100,5 C145,5 170,15 170,25 L170,35 L30,35 Z M25,45 L175,45 L175,55 L25,55 Z M20,65 L180,65 L180,75 L20,75 Z M25,85 L175,85 L175,95 L25,95 Z M30,105 L170,105 C170,125 150,145 100,145 C50,145 30,125 30,105 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "donut",
+    name: "Donut",
+    category: "food-drink",
+    tags: ["donut", "dessert", "sweet", "round"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.9,
+    svgPath:
+      "M100,10 C55,10 20,40 20,75 C20,110 55,140 100,140 C145,140 180,110 180,75 C180,40 145,10 100,10 Z M100,50 C125,50 140,62 140,75 C140,88 125,100 100,100 C75,100 60,88 60,75 C60,62 75,50 100,50 Z",
+    recommendedTypes: ["EAN-8", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+
+  // ─── People & Culture (Extended) ──────────────────────────────────────────
+  {
+    id: "dancer",
+    name: "Dancer",
+    category: "people-culture",
+    tags: ["dancer", "dance", "movement", "art"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.92,
+    svgPath:
+      "M100,5 C93,5 88,10 88,17 C88,24 93,29 100,29 C107,29 112,24 112,17 C112,10 107,5 100,5 Z M95,32 L95,55 L50,50 L45,62 L85,75 L80,110 L35,140 L45,148 L90,120 L95,150 L105,150 L110,120 L155,148 L165,140 L120,110 L115,75 L155,62 L150,50 L105,55 L105,32 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "peace-hand",
+    name: "Peace Hand",
+    category: "people-culture",
+    tags: ["peace", "hand", "victory", "symbol"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.95,
+    svgPath:
+      "M75,10 L75,75 L70,75 L65,65 L60,60 L55,60 L50,70 L50,85 L55,120 L65,140 L90,148 L135,148 L155,125 L160,95 L160,55 L155,50 L145,50 L140,55 L140,80 L130,80 L130,30 L125,25 L115,25 L110,30 L110,80 L100,80 L100,15 L95,10 L85,10 L85,80 L75,80 Z",
+    recommendedTypes: ["CODE-128", "EAN-8"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "skull",
+    name: "Skull",
+    category: "people-culture",
+    tags: ["skull", "skeleton", "halloween", "edgy"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.95,
+    svgPath:
+      "M100,5 C60,5 30,35 30,75 L30,95 C30,105 35,115 45,120 L50,130 L50,145 L75,145 L75,135 L85,135 L85,145 L115,145 L115,135 L125,135 L125,145 L150,145 L150,130 L155,120 C165,115 170,105 170,95 L170,75 C170,35 140,5 100,5 Z M75,65 m-10,0 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 Z M125,65 m-10,0 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 Z M90,95 L100,110 L110,95 Z",
+    recommendedTypes: ["CODE-128", "EAN-13"],
+    isCustom: false,
+    isPremium: false,
+  },
+
+  // ─── Architecture (Extended) ──────────────────────────────────────────────
+  {
+    id: "castle",
+    name: "Castle",
+    category: "architecture",
+    tags: ["castle", "fortress", "medieval", "fantasy"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.9,
+    svgPath:
+      "M20,145 L20,60 L30,60 L30,50 L45,50 L45,60 L60,60 L60,40 L75,40 L75,30 L90,30 L90,40 L105,40 L110,25 L115,40 L125,40 L125,30 L140,30 L140,40 L155,40 L155,60 L170,60 L170,50 L185,50 L185,60 L195,60 L195,145 Z M85,145 L85,100 L115,100 L115,145 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "pyramid",
+    name: "Pyramid",
+    category: "architecture",
+    tags: ["pyramid", "egypt", "triangle", "ancient"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.95,
+    svgPath:
+      "M100,10 L10,145 L190,145 Z M100,10 L100,145 Z",
+    recommendedTypes: ["EAN-13", "CODE-128", "EAN-8"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "windmill",
+    name: "Windmill",
+    category: "architecture",
+    tags: ["windmill", "dutch", "country", "power"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.92,
+    svgPath:
+      "M100,35 L70,145 L130,145 Z M100,35 L170,20 L160,45 L105,45 Z M100,35 L180,100 L155,105 L103,50 Z M100,35 L125,130 L95,130 L97,45 Z M100,35 L20,50 L30,75 L97,52 Z M95,90 L105,90 L105,145 L95,145 Z",
+    recommendedTypes: ["CODE-128", "EAN-13"],
+    isCustom: false,
+    isPremium: false,
+  },
+
+  // ─── Transport (Extended) ─────────────────────────────────────────────────
+  {
+    id: "train",
+    name: "Train",
+    category: "transport",
+    tags: ["train", "railway", "transport", "locomotive"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.8,
+    svgPath:
+      "M25,40 L25,110 L45,110 L45,40 L55,40 L55,20 L180,20 L180,110 L25,110 Z M70,50 L100,50 L100,80 L70,80 Z M110,50 L140,50 L140,80 L110,80 Z M150,50 L170,50 L170,80 L150,80 Z M40,110 C40,115 45,120 50,120 C55,120 60,115 60,110 Z M120,110 C120,115 125,120 130,120 C135,120 140,115 140,110 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "hot-air-balloon",
+    name: "Hot Air Balloon",
+    category: "transport",
+    tags: ["balloon", "air", "float", "travel"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.95,
+    svgPath:
+      "M100,5 C60,5 35,35 35,70 C35,90 45,105 60,115 L70,115 L80,145 L120,145 L130,115 L140,115 C155,105 165,90 165,70 C165,35 140,5 100,5 Z M70,115 L80,125 L120,125 L130,115 Z",
+    recommendedTypes: ["CODE-128", "EAN-8"],
+    isCustom: false,
+    isPremium: false,
+  },
+
+  // ─── Tech & Objects (Extended) ────────────────────────────────────────────
+  {
+    id: "lightbulb",
+    name: "Lightbulb",
+    category: "tech-objects",
+    tags: ["lightbulb", "idea", "innovation", "bright"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.95,
+    svgPath:
+      "M100,10 C70,10 50,35 50,60 C50,80 60,95 70,105 L70,125 L130,125 L130,105 C140,95 150,80 150,60 C150,35 130,10 100,10 Z M75,130 L125,130 L125,140 L75,140 Z M85,143 L115,143 L115,148 L85,148 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "key",
+    name: "Key",
+    category: "tech-objects",
+    tags: ["key", "lock", "security", "access"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.9,
+    svgPath:
+      "M55,75 m-30,0 a30,30 0 1,0 60,0 a30,30 0 1,0 -60,0 Z M55,75 m-12,0 a12,12 0 1,0 24,0 a12,12 0 1,0 -24,0 Z M85,75 L180,75 L180,90 L170,90 L170,105 L155,105 L155,90 L140,90 L140,110 L125,110 L125,90 L85,90 Z",
+    recommendedTypes: ["CODE-128", "EAN-13"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "gear",
+    name: "Gear",
+    category: "tech-objects",
+    tags: ["gear", "cog", "mechanical", "settings"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.95,
+    svgPath:
+      "M100,10 L110,25 L125,22 L130,38 L145,42 L143,58 L156,68 L148,82 L156,96 L143,106 L145,122 L130,126 L125,142 L110,139 L100,154 L90,139 L75,142 L70,126 L55,122 L57,106 L44,96 L52,82 L44,68 L57,58 L55,42 L70,38 L75,22 L90,25 Z M100,55 m-20,0 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0 Z",
+    recommendedTypes: ["CODE-128", "EAN-13"],
+    isCustom: false,
+    isPremium: false,
+  },
+
+  // ─── Abstract (Extended) ──────────────────────────────────────────────────
+  {
+    id: "infinity",
+    name: "Infinity",
+    category: "abstract",
+    tags: ["infinity", "loop", "forever", "endless"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.8,
+    svgPath:
+      "M50,75 C50,50 70,40 85,55 C95,65 105,85 115,95 C130,110 150,100 150,75 C150,50 130,40 115,55 C105,65 95,85 85,95 C70,110 50,100 50,75 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
+  {
+    id: "yin-yang",
+    name: "Yin Yang",
+    category: "abstract",
+    tags: ["yinyang", "balance", "zen", "harmony"],
+    viewBox: "0 0 200 150",
+    artZoneRatio: 0.95,
+    svgPath:
+      "M100,5 C60,5 30,37 30,75 C30,113 60,145 100,145 C138,145 170,113 170,75 C170,37 138,5 100,5 Z M100,5 C80,5 65,20 65,40 C65,60 80,75 100,75 C120,75 135,90 135,110 C135,130 120,145 100,145 C60,145 30,113 30,75 C30,37 60,5 100,5 Z M100,32 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z",
+    recommendedTypes: ["EAN-13", "CODE-128"],
+    isCustom: false,
+    isPremium: false,
+  },
 ];
 
 // Shape lookup by ID — O(1) access

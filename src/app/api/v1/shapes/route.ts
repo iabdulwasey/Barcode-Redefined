@@ -39,7 +39,7 @@ export async function GET(request: Request): Promise<NextResponse> {
           tags: s.tags,
           isPremium: s.isPremium,
           recommendedTypes: s.recommendedTypes,
-          thumbnailUrl: s.thumbnailUrl,
+          ...(s.thumbnailUrl ? { thumbnailUrl: s.thumbnailUrl } : {}),
         })),
         total: shapes.length,
       },

@@ -9,6 +9,7 @@
  * Client-heavy: rendering happens in-browser via useBarcodeState.
  */
 
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { StudioWorkspace } from "@/components/studio/StudioWorkspace";
 
@@ -41,7 +42,9 @@ export default function StudioPage() {
         </div>
       </header>
 
-      <StudioWorkspace />
+      <Suspense fallback={<div className="flex-1 flex items-center justify-center text-white/20 text-sm">Loading studio…</div>}>
+        <StudioWorkspace />
+      </Suspense>
     </div>
   );
 }

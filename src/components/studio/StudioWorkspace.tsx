@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useBarcodeState } from "@/hooks/useBarcodeState";
 import { BarcodeCanvas } from "./BarcodeCanvas";
 import { ColorSystem } from "./ColorSystem";
@@ -11,15 +13,26 @@ import { TypeSelector } from "./TypeSelector";
 import { is1D } from "@/types/barcode";
 
 export function StudioWorkspace() {
+  const searchParams = useSearchParams();
   const state = useBarcodeState();
 
-  const filenameHint = `scanvas-${state.type.toLowerCase()}-${Date.now()}`;
+  // Apply shape from ?shape= query param (e.g., coming from the shape gallery)
+  useEffect(() => {
+    const shapeParam = searchParams.get("shape");
+    if (shapeParam) {
+      state.setShapeId(shapeParam);
+    }
+    // Only run on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const filenameHint = `scanvas-${state.type.toLowerCase()}`;
   const canExport = !!state.svg && !state.error;
 
   return (
-    <div className="flex flex-1 overflow-hidden">
+    <div className="flex flex-1 overflow-hidden flex-col md:flex-row">
       {/* Left panel: Input */}
-      <aside className="w-72 border-r border-canvas-border bg-canvas-surface overflow-y-auto shrink-0">
+      <aside className="md:w-72 border-b md:border-b-0 md:border-r border-canvas-border bg-canvas-surface overflow-y-auto shrink-0">
         <div className="p-4 space-y-6">
           <section>
             <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-3">
@@ -45,7 +58,7 @@ export function StudioWorkspace() {
               <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-3">
                 Options
               </h2>
-              <label className="flex items-center gap-2 text-sm text-white/70 cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-white/70 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={state.showDigits}
@@ -60,7 +73,7 @@ export function StudioWorkspace() {
       </aside>
 
       {/* Center: Preview canvas */}
-      <main className="flex-1 flex flex-col items-center justify-center bg-canvas-bg p-8 gap-5 overflow-y-auto">
+      <main className="flex-1 flex flex-col items-center justify-center bg-canvas-bg p-4 md:p-8 gap-5 overflow-y-auto">
         <BarcodeCanvas
           svg={state.svg}
           isGenerating={state.isGenerating}
@@ -73,7 +86,7 @@ export function StudioWorkspace() {
       </main>
 
       {/* Right panel: Style + Export */}
-      <aside className="w-80 border-l border-canvas-border bg-canvas-surface overflow-y-auto shrink-0">
+      <aside className="md:w-80 border-t md:border-t-0 md:border-l border-canvas-border bg-canvas-surface overflow-y-auto shrink-0">
         <div className="p-4 space-y-6">
           <section>
             <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-3">

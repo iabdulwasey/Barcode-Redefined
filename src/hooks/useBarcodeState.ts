@@ -1,8 +1,12 @@
 /**
  * useBarcodeState
  *
- * The single source of truth for the studio. Owns type, data, shape, color,
+ * Single source of truth for the studio. Owns type, data, shape, color,
  * and derives the rendered SVG + scan assessment via a debounced effect.
+ *
+ * Scan validation runs in two passes:
+ *   1. Heuristic (synchronous) — immediate feedback on color/contrast
+ *   2. ZXing WASM decode (async) — real decode confidence after SVG is rendered
  */
 
 "use client";
@@ -12,17 +16,10 @@ import { BarcodeValidationError, render1DBarcode } from "@/engine/barcode-1d";
 import { renderQRCode, validate2DData, QRValidationError } from "@/engine/barcode-2d";
 import { compose1DSVG, composeQRSVG } from "@/engine/svg-composer";
 import { assessScanability, type ScanAssessment } from "@/engine/scan-validator";
+import { decodeBarcodeSvg } from "@/engine/zxing-decoder";
 import { getShapeById } from "@/engine/shapes";
 import { is1D, type BarcodeType, type ColorConfig } from "@/types/barcode";
 import type { Shape } from "@/types/shapes";
-
-interface StudioState {
-  type: BarcodeType;
-  data: string;
-  shapeId: string | null; // null = no shape, plain barcode
-  color: ColorConfig;
-  showDigits: boolean;
-}
 
 export interface UseBarcodeStateReturn {
   type: BarcodeType;
@@ -43,12 +40,12 @@ export interface UseBarcodeStateReturn {
   isGenerating: boolean;
 }
 
-const DEFAULT_STATE: StudioState = {
-  type: "EAN-13",
+const DEFAULT_STATE = {
+  type: "EAN-13" as BarcodeType,
   data: "5901234123457",
-  shapeId: "palm-tree",
+  shapeId: "palm-tree" as string | null,
   color: {
-    mode: "solid",
+    mode: "solid" as const,
     primary: "#000000",
     background: "#FFFFFF",
   },
@@ -59,35 +56,73 @@ const DEBOUNCE_MS = 120;
 
 export function useBarcodeState(): UseBarcodeStateReturn {
   const [type, setType] = useState<BarcodeType>(DEFAULT_STATE.type);
-  const [data, setData] = useState<string>(DEFAULT_STATE.data);
+  const [data, setData] = useState(DEFAULT_STATE.data);
   const [shapeId, setShapeId] = useState<string | null>(DEFAULT_STATE.shapeId);
   const [color, setColor] = useState<ColorConfig>(DEFAULT_STATE.color);
-  const [showDigits, setShowDigits] = useState<boolean>(DEFAULT_STATE.showDigits);
+  const [showDigits, setShowDigits] = useState(DEFAULT_STATE.showDigits);
 
-  const [svg, setSvg] = useState<string>("");
+  const [svg, setSvg] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // ZXing decode result — null means "not yet run / unavailable"
+  const [zxingDecoded, setZxingDecoded] = useState<boolean | null>(null);
 
   const shape = useMemo(() => (shapeId ? getShapeById(shapeId) ?? null : null), [shapeId]);
 
   const cancelRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Compute scan assessment synchronously — it doesn't need the rendered SVG
-  const scan = useMemo<ScanAssessment>(() => {
-    // Assume data is valid if last generation succeeded (no error)
-    return assessScanability({
-      type,
-      color,
-      ...(shape ? { shape } : {}),
-      dataValid: !error,
-    });
-  }, [type, color, shape, error]);
+  // Heuristic scan assessment — updated synchronously on every state change
+  const heuristicScan = useMemo<ScanAssessment>(
+    () =>
+      assessScanability({
+        type,
+        color,
+        ...(shape ? { shape } : {}),
+        dataValid: !error,
+      }),
+    [type, color, shape, error]
+  );
 
-  // Debounced generation effect
+  // Merge heuristic + ZXing result into final scan assessment
+  const scan = useMemo<ScanAssessment>(() => {
+    if (zxingDecoded === null) return heuristicScan;
+
+    if (zxingDecoded) {
+      // ZXing confirmed decode — clamp to at least 85 confidence
+      return {
+        ...heuristicScan,
+        confidence: Math.max(heuristicScan.confidence, 85),
+        level:
+          heuristicScan.confidence >= 75
+            ? "good"
+            : ("warn" as ScanAssessment["level"]),
+      };
+    }
+
+    // ZXing failed to decode — real failure
+    return {
+      confidence: 0,
+      contrastRatio: heuristicScan.contrastRatio,
+      level: "bad" as const,
+      warnings: [
+        {
+          code: "DECODE_FAILED" as const,
+          message:
+            "Barcode could not be decoded. Check contrast and quiet zones.",
+          severity: "error" as const,
+        },
+        ...heuristicScan.warnings,
+      ],
+    };
+  }, [heuristicScan, zxingDecoded]);
+
+  // Debounced SVG generation
   useEffect(() => {
     cancelRef.current = false;
     setIsGenerating(true);
+    setZxingDecoded(null); // reset ZXing result while regenerating
 
     if (timerRef.current) clearTimeout(timerRef.current);
 
@@ -125,6 +160,14 @@ export function useBarcodeState(): UseBarcodeStateReturn {
         if (cancelRef.current) return;
         setSvg(composed);
         setError(null);
+        setIsGenerating(false);
+
+        // Fire ZXing validation asynchronously — doesn't block UI
+        decodeBarcodeSvg(composed, 400).then((result) => {
+          if (!cancelRef.current) {
+            setZxingDecoded(result?.decoded ?? null);
+          }
+        });
       } catch (err) {
         if (cancelRef.current) return;
         const message =
@@ -135,8 +178,7 @@ export function useBarcodeState(): UseBarcodeStateReturn {
               : "Failed to generate barcode.";
         setError(message);
         setSvg("");
-      } finally {
-        if (!cancelRef.current) setIsGenerating(false);
+        setIsGenerating(false);
       }
     }, DEBOUNCE_MS);
 

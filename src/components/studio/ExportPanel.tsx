@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Download, Check } from "lucide-react";
+import { Copy, Download, Check, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -11,13 +11,13 @@ interface ExportPanelProps {
   filenameHint: string;
 }
 
-type Size = "sm" | "md" | "lg";
-
-const SIZE_PX: Record<Size, number> = { sm: 200, md: 400, lg: 800 };
+type PngSize = "sm" | "md" | "lg";
+const PNG_SIZES: Record<PngSize, number> = { sm: 200, md: 400, lg: 800 };
 
 export function ExportPanel({ svg, disabled, filenameHint }: ExportPanelProps) {
-  const [size, setSize] = useState<Size>("md");
+  const [pngSize, setPngSize] = useState<PngSize>("md");
   const [copied, setCopied] = useState(false);
+  const [exportingPdf, setExportingPdf] = useState(false);
 
   const downloadSvg = () => {
     if (!svg) return;
@@ -30,12 +30,39 @@ export function ExportPanel({ svg, disabled, filenameHint }: ExportPanelProps) {
   const downloadPng = async () => {
     if (!svg) return;
     try {
-      const pngBlob = await rasterizeSvgToPng(svg, SIZE_PX[size]);
+      const pngBlob = await rasterizeSvgToPng(svg, PNG_SIZES[pngSize]);
       const url = URL.createObjectURL(pngBlob);
       triggerDownload(url, `${filenameHint}.png`);
       URL.revokeObjectURL(url);
     } catch (err) {
       console.error("PNG export failed", err);
+    }
+  };
+
+  const downloadPdf = async () => {
+    if (!svg || exportingPdf) return;
+    setExportingPdf(true);
+    try {
+      const res = await fetch("/api/v1/export/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          svg,
+          widthMm: 50,
+          dpi: 300,
+          filename: filenameHint,
+          title: filenameHint,
+        }),
+      });
+      if (!res.ok) throw new Error("PDF export failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      triggerDownload(url, `${filenameHint}.pdf`);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("PDF export failed", err);
+    } finally {
+      setExportingPdf(false);
     }
   };
 
@@ -52,7 +79,7 @@ export function ExportPanel({ svg, disabled, filenameHint }: ExportPanelProps) {
 
   return (
     <div className="space-y-3">
-      {/* Size selector */}
+      {/* PNG size selector */}
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40 mb-1.5">
           PNG size
@@ -62,15 +89,15 @@ export function ExportPanel({ svg, disabled, filenameHint }: ExportPanelProps) {
             <button
               key={s}
               type="button"
-              onClick={() => setSize(s)}
+              onClick={() => setPngSize(s)}
               className={cn(
                 "flex-1 text-[11px] font-medium py-1 rounded transition-colors",
-                size === s
+                pngSize === s
                   ? "bg-canvas-elevated text-white"
                   : "text-white/50 hover:text-white/80"
               )}
             >
-              {SIZE_PX[s]}px
+              {PNG_SIZES[s]}px
             </button>
           ))}
         </div>
@@ -96,7 +123,18 @@ export function ExportPanel({ svg, disabled, filenameHint }: ExportPanelProps) {
           className="w-full"
         >
           <Download size={14} />
-          Download PNG
+          Download PNG ({PNG_SIZES[pngSize]}px)
+        </Button>
+
+        <Button
+          onClick={downloadPdf}
+          disabled={disabled || exportingPdf}
+          variant="outline"
+          size="md"
+          className="w-full"
+        >
+          <FileText size={14} />
+          {exportingPdf ? "Generating PDF…" : "Download PDF (300 DPI)"}
         </Button>
 
         <Button
@@ -123,20 +161,15 @@ function triggerDownload(url: string, filename: string) {
   document.body.removeChild(a);
 }
 
-/**
- * Rasterize an SVG string to a PNG Blob via a canvas.
- * Client-side, no server roundtrip — works for any size.
- */
 function rasterizeSvgToPng(svg: string, width: number): Promise<Blob> {
   return new Promise((resolve, reject) => {
-    // Parse viewBox to get aspect ratio for height
     const vbMatch = svg.match(/viewBox="([^"]+)"/);
     let aspectRatio = 4 / 3;
     if (vbMatch) {
       const parts = vbMatch[1]!.split(/\s+/).map(Number);
       const w = parts[2] ?? 400;
       const h = parts[3] ?? 300;
-      aspectRatio = w / h;
+      if (h > 0) aspectRatio = w / h;
     }
     const height = Math.round(width / aspectRatio);
 

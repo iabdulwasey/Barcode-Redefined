@@ -14,6 +14,7 @@ const Schema = z.object({
   widthMm: z.number().min(10).max(500).default(40),
   dpi: z.number().min(72).max(600).default(300),
   bleedMm: z.number().min(0).max(10).default(0),
+  cropMarks: z.boolean().default(true),
   title: z.string().max(120).default("SCANVAS Barcode"),
   filename: z.string().max(120).default("scanvas-barcode"),
 });
@@ -34,10 +35,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  const { svg, widthMm, dpi, bleedMm, title, filename } = parsed.data;
+  const { svg, widthMm, dpi, bleedMm, cropMarks, title, filename } = parsed.data;
 
   try {
-    const buffer = await svgToPdfBuffer(svg, { widthMm, dpi, bleedMm, title });
+    const buffer = await svgToPdfBuffer(svg, { widthMm, dpi, bleedMm, cropMarks, title });
 
     return new NextResponse(new Uint8Array(buffer), {
       status: 200,

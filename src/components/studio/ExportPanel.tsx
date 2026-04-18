@@ -18,6 +18,8 @@ export function ExportPanel({ svg, disabled, filenameHint }: ExportPanelProps) {
   const [pngSize, setPngSize] = useState<PngSize>("md");
   const [copied, setCopied] = useState(false);
   const [exportingPdf, setExportingPdf] = useState(false);
+  const [bleedMm, setBleedMm] = useState(3);
+  const [cropMarks, setCropMarks] = useState(true);
 
   const downloadSvg = () => {
     if (!svg) return;
@@ -50,6 +52,8 @@ export function ExportPanel({ svg, disabled, filenameHint }: ExportPanelProps) {
           svg,
           widthMm: 50,
           dpi: 300,
+          bleedMm,
+          cropMarks,
           filename: filenameHint,
           title: filenameHint,
         }),
@@ -100,6 +104,45 @@ export function ExportPanel({ svg, disabled, filenameHint }: ExportPanelProps) {
               {PNG_SIZES[s]}px
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Print PDF options */}
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40 mb-1.5">
+          Print PDF options
+        </p>
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-white/50">Bleed</span>
+            <div className="flex items-center gap-1">
+              {[0, 2, 3, 5].map((mm) => (
+                <button
+                  key={mm}
+                  type="button"
+                  onClick={() => setBleedMm(mm)}
+                  className={cn(
+                    "text-[10px] px-1.5 py-0.5 rounded transition-colors",
+                    bleedMm === mm
+                      ? "bg-canvas-elevated text-white"
+                      : "text-white/40 hover:text-white/70"
+                  )}
+                >
+                  {mm}mm
+                </button>
+              ))}
+            </div>
+          </div>
+          <label className="flex items-center gap-2 text-[11px] text-white/50 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={cropMarks}
+              onChange={(e) => setCropMarks(e.target.checked)}
+              className="accent-brand"
+              disabled={bleedMm === 0}
+            />
+            Crop marks {bleedMm === 0 && <span className="text-white/25">(add bleed first)</span>}
+          </label>
         </div>
       </div>
 

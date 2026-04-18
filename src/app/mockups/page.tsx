@@ -21,14 +21,14 @@ export default function MockupsPage() {
           <Link href="/batch" className="hover:text-white transition-colors">Batch</Link>
           <Link href="/mockups" className="text-white font-medium">Mockups</Link>
         </nav>
-        <div className="flex items-center gap-2">
-          <button className="text-sm px-4 py-1.5 rounded-md border border-canvas-border text-white/60 hover:text-white hover:border-white/30 transition-colors">
-            Sign In
-          </button>
-          <button className="text-sm px-4 py-1.5 rounded-md bg-brand text-white font-medium hover:bg-brand-hover transition-colors">
-            Get Pro
-          </button>
-        </div>
+        <a
+          href="https://paypal.me/iabdulwasey"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm px-4 py-1.5 rounded-md bg-[#0070ba] text-white font-medium hover:bg-[#005ea6] transition-colors"
+        >
+          ☕ Buy me a coffee
+        </a>
       </header>
 
       <div className="flex-1 max-w-6xl mx-auto w-full px-6 py-10">

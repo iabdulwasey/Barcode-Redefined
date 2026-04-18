@@ -42,7 +42,7 @@ AI:         Anthropic Claude API (claude-sonnet-4-20250514) — shape gen, brand
 Barcode:    JsBarcode (1D rendering) + qrcode-generator (QR) + custom SVG engine
 Export:     Sharp (PNG/WebP), PDFKit (print PDF + CMYK), Archiver (batch ZIP)
 Scan Valid: ZXing WASM (in-browser barcode decoder for confidence scoring)
-Payments:   Stripe (subscriptions + usage-based API metering)
+Donations:  PayPal (https://paypal.me/iabdulwasey) — free platform, coffee donations only
 Analytics:  PostHog (self-hosted or cloud)
 Hosting:    Vercel (frontend + serverless) + Supabase + Cloudflare R2 (asset storage)
 ```
@@ -326,26 +326,18 @@ ANTHROPIC_API_KEY=
 # Replicate (for AI QR art)
 REPLICATE_API_TOKEN=
 
-# Stripe
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-
 # Storage (Cloudflare R2 or Supabase Storage)
 STORAGE_BUCKET=scanvas-assets
 ```
 
 ---
 
-## Monetization Tiers
+## Monetization
 
-| Tier | Price | Limits |
-|------|-------|--------|
-| **Free** | $0/mo | 10 barcodes/mo, basic shapes, SVG only, watermark on PNG |
-| **Pro** | $12/mo | Unlimited barcodes, all shapes, all exports, 20 AI QRs/mo, batch (50/job), mockups |
-| **Team** | $29/mo | Everything in Pro + 5 seats, brand kits, shared library |
-| **API** | $0.02/req | REST API, usage-based, bulk discounts |
-| **Enterprise** | Custom | White-label, custom shapes, SLA, on-prem |
+**SCANVAS is 100% free.** No tiers, no limits, no watermarks. All features — shapes, exports (SVG/PNG/PDF), batch, AI QR, mockups — are available to everyone.
+
+If you find it useful, you can support development via PayPal:
+**https://paypal.me/iabdulwasey** (☕ Buy me a coffee link shown in every page header)
 
 ---
 

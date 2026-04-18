@@ -80,7 +80,7 @@ export const COLOR_PRESETS: ColorPreset[] = [
   {
     id: "neon",
     name: "Neon",
-    isPremium: true,
+    isPremium: false,
     config: {
       mode: "solid",
       primary: "#00FF88",
@@ -90,7 +90,7 @@ export const COLOR_PRESETS: ColorPreset[] = [
   {
     id: "gradient-sunset",
     name: "Gradient Sunset",
-    isPremium: true,
+    isPremium: false,
     config: {
       mode: "gradient",
       primary: "#BE123C",
@@ -102,7 +102,7 @@ export const COLOR_PRESETS: ColorPreset[] = [
   {
     id: "gradient-aurora",
     name: "Gradient Aurora",
-    isPremium: true,
+    isPremium: false,
     config: {
       mode: "gradient",
       primary: "#6366F1",

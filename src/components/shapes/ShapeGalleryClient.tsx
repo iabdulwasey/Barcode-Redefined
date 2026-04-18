@@ -121,11 +121,6 @@ export function ShapeGalleryClient() {
                   />
                 </svg>
 
-                {shape.isPremium && (
-                  <span className="absolute top-1.5 right-1.5 text-[9px] font-bold px-1 py-0.5 rounded bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
-                    PRO
-                  </span>
-                )}
               </div>
 
               {/* Label */}

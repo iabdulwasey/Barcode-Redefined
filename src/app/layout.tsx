@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
+import { PostHogProvider, PostHogPageTracker } from "@/components/shared/PostHogProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -67,7 +69,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-canvas-bg text-white min-h-screen`}
       >
-        {children}
+        <PostHogProvider>
+          <Suspense fallback={null}>
+            <PostHogPageTracker />
+          </Suspense>
+          {children}
+        </PostHogProvider>
       </body>
     </html>
   );

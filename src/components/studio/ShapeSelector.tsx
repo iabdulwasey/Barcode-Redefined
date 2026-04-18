@@ -4,8 +4,9 @@ import { useMemo, useState } from "react";
 import { Search, Sparkles, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import { SHAPES } from "@/engine/shapes";
+import { SHAPES, getTransientShapes } from "@/engine/shapes";
 import { SHAPE_CATEGORY_LABELS, type ShapeCategory } from "@/types/shapes";
+import { AIShapePrompt } from "./AIShapePrompt";
 
 type Filter = "all" | ShapeCategory;
 
@@ -29,10 +30,15 @@ const CATEGORY_ORDER: Filter[] = [
 export function ShapeSelector({ selectedId, onSelect }: ShapeSelectorProps) {
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
+  const [showAIModal, setShowAIModal] = useState(false);
+  // Track transient (AI-generated) shape IDs so useMemo re-runs when new ones appear
+  const [transientIds, setTransientIds] = useState<string[]>([]);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
-    return SHAPES.filter((shape) => {
+    const transient = getTransientShapes();
+    const all = [...transient, ...SHAPES];
+    return all.filter((shape) => {
       if (filter !== "all" && shape.category !== filter) return false;
       if (q) {
         return (
@@ -42,7 +48,14 @@ export function ShapeSelector({ selectedId, onSelect }: ShapeSelectorProps) {
       }
       return true;
     });
-  }, [filter, query]);
+    // transientIds is a reactive trigger — changes when AI shapes are added
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter, query, transientIds]);
+
+  const handleAIAccept = (shapeId: string) => {
+    setTransientIds((prev) => [...prev, shapeId]);
+    onSelect(shapeId);
+  };
 
   return (
     <div className="space-y-3">
@@ -127,13 +140,12 @@ export function ShapeSelector({ selectedId, onSelect }: ShapeSelectorProps) {
         <p className="text-center text-xs text-white/40 py-4">No shapes match.</p>
       )}
 
-      {/* AI + Upload CTAs (Phase 3) */}
+      {/* AI + Upload CTAs */}
       <div className="grid grid-cols-2 gap-2 pt-1">
         <button
           type="button"
-          disabled
-          title="Coming in Phase 3"
-          className="flex items-center justify-center gap-1.5 text-[11px] font-medium px-2 py-2 rounded border border-dashed border-canvas-border text-white/30 cursor-not-allowed"
+          onClick={() => setShowAIModal(true)}
+          className="flex items-center justify-center gap-1.5 text-[11px] font-medium px-2 py-2 rounded border border-brand/40 text-brand-hover hover:bg-brand/10 transition-colors"
         >
           <Sparkles size={12} />
           AI Generate
@@ -141,13 +153,20 @@ export function ShapeSelector({ selectedId, onSelect }: ShapeSelectorProps) {
         <button
           type="button"
           disabled
-          title="Coming in Phase 3"
+          title="Coming in Phase 4"
           className="flex items-center justify-center gap-1.5 text-[11px] font-medium px-2 py-2 rounded border border-dashed border-canvas-border text-white/30 cursor-not-allowed"
         >
           <Upload size={12} />
           Upload SVG
         </button>
       </div>
+
+      {showAIModal && (
+        <AIShapePrompt
+          onAccept={handleAIAccept}
+          onClose={() => setShowAIModal(false)}
+        />
+      )}
     </div>
   );
 }

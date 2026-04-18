@@ -857,8 +857,20 @@ export const SHAPES: Shape[] = [
 // Shape lookup by ID — O(1) access
 const SHAPE_MAP = new Map(SHAPES.map((s) => [s.id, s]));
 
+// Transient shapes (AI-generated or user-uploaded) — in-memory for session
+const TRANSIENT_SHAPES = new Map<string, Shape>();
+
+export function registerTransientShape(shape: Shape): string {
+  TRANSIENT_SHAPES.set(shape.id, shape);
+  return shape.id;
+}
+
+export function getTransientShapes(): Shape[] {
+  return Array.from(TRANSIENT_SHAPES.values());
+}
+
 export function getShapeById(id: string): Shape | undefined {
-  return SHAPE_MAP.get(id);
+  return SHAPE_MAP.get(id) ?? TRANSIENT_SHAPES.get(id);
 }
 
 export function getShapesByCategory(

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useBarcodeState } from "@/hooks/useBarcodeState";
 import { BarcodeCanvas } from "./BarcodeCanvas";
+import { BrandMatcher } from "./BrandMatcher";
 import { ColorSystem } from "./ColorSystem";
 import { DataInput } from "./DataInput";
 import { ExportPanel } from "./ExportPanel";
@@ -100,6 +101,14 @@ export function StudioWorkspace() {
               Color
             </h2>
             <ColorSystem color={state.color} onChange={state.setColor} />
+          </section>
+
+          <section>
+            <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-3 flex items-center justify-between">
+              <span>Brand Colors</span>
+              <span className="text-[9px] font-normal normal-case tracking-normal bg-brand/20 text-brand-hover px-1.5 py-0.5 rounded">AI</span>
+            </h2>
+            <BrandMatcher onApply={state.setColor} />
           </section>
 
           <section>

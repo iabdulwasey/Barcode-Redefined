@@ -54,7 +54,7 @@ ${request.category ? `Category hint: ${request.category}` : ""}
 Return only the path d="" value.`;
 
   const message = await getClient().messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-6",
     max_tokens: 1024,
     system: SYSTEM_PROMPT,
     messages: [
@@ -108,7 +108,7 @@ Ensure sufficient contrast for barcode scanning (primary vs background contrast 
 Return only the JSON array, no markdown, no explanation.`;
 
   const message = await getClient().messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-6",
     max_tokens: 512,
     messages: [{ role: "user", content: prompt }],
   });
